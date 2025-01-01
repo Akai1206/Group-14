@@ -1,0 +1,177 @@
+body {
+    margin: 0;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f4ecd8;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100px;
+    padding: 1rem 1.5rem;
+    background-color: #d4a373;
+    border-bottom: 5px solid #c87f42;
+    position: relative;
+}
+
+.left-section {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.cart-button img {
+    width: 50px;
+    height: auto;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.cart-button a:hover img {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.auth-dropdown {
+    position: relative;
+}
+
+.dropdown-button {
+    background-color: #c87f42;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-button:hover {
+    background-color: #b36d38;
+    transform: scale(1.1);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0; 
+    background-color: white;
+    min-width: 120px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.auth-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.logo img {
+    width: 100px;
+    height: auto;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.1);
+}
+
+.review-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fffaf0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.review-container h2 {
+    text-align: center;
+    color: #d96459;
+}
+
+.review-form {
+    margin-bottom: 20px;
+}
+
+.review-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.review-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.review-form select,
+.review-form button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.review-form button {
+    background-color: #d4a373;
+    color: white;
+    cursor: pointer;
+}
+
+.review-form button:hover {
+    background-color: #b36d38;
+}
+
+.reviews {
+    margin-top: 20px;
+}
+
+.review {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.review p {
+    margin: 5px 0;
+}
+
+.review .rating {
+    color: #f77f00;
+}
+
+#footer {
+    background-color: #d4a373;
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+#footer .footer-info {
+    font-size: 14px;
+}
+
+#footer .footer-info a {
+    color: white;
+    text-decoration: none;
+}
