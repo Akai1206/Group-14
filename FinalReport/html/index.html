@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Store</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html">登入</a>
+                    <a href="singup.html">註冊</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="Comment.html">評論區</a></li>   
+                <li><a href="#article">重點商品</a></li>
+                <li><a href="#section">商品</a></li>
+                <li><a href="about.html">關於</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+
+    <article id="article">
+        <h1>熱銷 / 重點商品</h1>
+        <div class="slideshow-container">
+            <div class="mySlides">
+                <img src="../img/444.png" style="width:100%">
+            </div>
+    
+            <div class="mySlides">
+                <img src="../img/555.png" style="width:100%">
+            </div>
+    
+            <div class="mySlides">
+                <img src="../img/666.png" style="width:100%">
+            </div>
+    
+            
+            <div class="pre" onclick="plusSlides(-1)">❮</div>
+            <div class="next" onclick="plusSlides(1)">❯</div>
+        </div>
+    
+        
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </article>
+
+    <section class="products" id="section">
+        <div class="product">
+            <img src="../img/444.png" alt="商品1">
+            <p class="product-description">帥帥吉他</p>
+            <p>$1000</p>
+            <input type="number" class="quantity" id="quantity-1" value="1" min="1">
+            <button class="add-to-cart" data-id="1" data-name="帥帥吉他" data-price="1000">加入購物車</button>
+            <div class="overlay">
+                <p class="product-info">這是一款專為音樂愛好者設計的吉他，無論你是初學者還是有經驗的吉他手，都能夠輕鬆上手並發揮出色的音樂表現。吉他的琴身採用高品質木材製成，提供明亮、清晰的音色，無論是在練習或表演中，都能帶來豐富的音樂層次感。經過精心調整的琴弦，讓每個音符都更加準確且響亮。</p>
+            </div>
+        </div>
+        <div class="product">
+            <img src="../img/U3PE.png" alt="商品2">
+            <p class="product-description">帥帥鋼琴</p>
+            <p>$2000</p>
+            <input type="number" class="quantity" id="quantity-2" value="1" min="1">
+            <button class="add-to-cart" data-id="2" data-name="帥帥鋼琴" data-price="2000">加入購物車</button>
+            <div class="overlay">
+                <p class="product-info">這款鋼琴是一個集優雅與音質於一身的音樂利器，專為喜愛音樂的你設計。採用高品質的木材與精緻的工藝，鋼琴的外觀典雅大方，能夠完美融入各種室內裝飾風格。每一個琴鍵都經過精細調校，保證音準準確且穩定，無論是初學者還是專業演奏者，都能輕鬆駕馭。</p>
+            </div>
+        </div>
+        <div class="product">
+            <img src="../img/555.png" alt="商品3">
+            <p class="product-description">帥帥小提琴</p>
+            <p>$1500</p>
+            <input type="number" class="quantity" id="quantity-3" value="1" min="1">
+            <button class="add-to-cart" data-id="3" data-name="帥帥小提琴" data-price="1500">加入購物車</button>
+            <div class="overlay">
+                <p class="product-info">這款小提琴專為熱愛古典音樂和追求音質的演奏者設計，無論是初學者還是有經驗的音樂家，都能體驗到其優異的音色與演奏感受。琴身採用精選木材精心製作，經過專業的聲音調校，能夠呈現清晰、豐富的音色，從柔和的低音到明亮的高音，每一個音符都清晰而動人。</p>
+            </div>
+        </div>
+        <div class="product">
+            <img src="../img/666.png" alt="商品4">
+            <p class="product-description">帥帥木箱鼓</p>
+            <p>$800</p>
+            <input type="number" class="quantity" id="quantity-4" value="1" min="1">
+            <button class="add-to-cart" data-id="4" data-name="帥帥木箱鼓" data-price="800">加入購物車</button>
+            <div class="overlay">
+                <p class="product-info">這款木箱鼓（Cajón）是一種源自非洲和拉丁美洲的打擊樂器，以其獨特的音色和多樣的演奏方式，成為音樂愛好者和專業音樂家喜愛的選擇。木箱鼓的外殼選用高品質木材製作，經過精心設計與製作，提供強而有力的低音與清晰的高音，能夠應對各種音樂風格，從民謠到拉丁音樂，都能完美融合。</p>
+            </div>
+        </div>
+        <div class="product">
+            <img src="../img/777.png" alt="商品5">
+            <p class="product-description">帥帥小喇叭</p>
+            <p>$600</p>
+            <input type="number" class="quantity" id="quantity-5" value="1" min="1">
+            <button class="add-to-cart" data-id="5" data-name="帥帥小喇叭" data-price="600">加入購物車</button>
+            <div class="overlay">
+                <p class="product-info">這款小喇叭是一款經典的打擊樂器，適合用於各種慶祝活動、遊行、派對或音樂表演中。它由高品質金屬製成，經過精緻工藝打磨，呈現出亮眼的外觀與堅固耐用的結構。小巧的設計讓使用者能輕鬆吹奏，發出清脆、響亮的音色，無論在戶外或室內都能引人注目。</p>
+            </div>
+        </div>
+        <div class="product">
+            <img src="../img/888.png" alt="商品6">
+            <p class="product-description">帥帥拇指琴</p>
+            <p>$500</p>
+            <input type="number" class="quantity" id="quantity-6" value="1" min="1">
+            <button class="add-to-cart" data-id="6" data-name="帥帥拇指琴" data-price="500">加入購物車</button>
+            <div class="overlay">
+                <p class="product-info">這款拇指琴（Kalimba）是一種源自非洲的傳統樂器，以其獨特的音色和簡單的演奏方式，迅速獲得音樂愛好者的喜愛。拇指琴由精選木材製成，琴面光滑，搭配金屬琴鍵，能夠產生清脆、悅耳的音色。每一個琴鍵的長度與厚度經過精心調整，能夠提供豐富的音階和音色層次，演奏時帶來柔和且富有表現力的音響效果。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <div class="footer-info">
+            客服
+            <a href="mailto:hihi931107@gmail.com" class="gmail">hihi931107@gmail.com</a>
+        </div>
+    </footer>
+    
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('view-cart');
+            cartCount.textContent = `查看購物車 (${cart.length})`;
+        }
+
+        function addToCart(event) {
+            const button = event.target;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
+            const quantity = parseInt(document.getElementById('quantity-' + id).value);
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ id, name, price, quantity });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', addToCart);
+        });
+    </script>
+    <script>
+        var slideIndex = 0;
+        var slideInterval;
+
+        function showSlides(n) {
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+  
+            if (n >= slides.length) { slideIndex = 0; }
+            if (n < 0) { slideIndex = slides.length - 1; }
+
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (var i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex].style.display = "block";
+
+            dots[slideIndex].className += " active";
+        }
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n - 1);
+        }
+
+        showSlides(slideIndex);
+
+        function startAutoPlay() {
+            slideInterval = setInterval(function() {
+                plusSlides(1); 
+            }, 2000);
+        }
+
+        startAutoPlay();
+
+    </script>
+</body>
+</html>
+
+

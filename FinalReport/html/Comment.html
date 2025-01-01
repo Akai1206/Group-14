@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品評論</title>
+    <link rel="stylesheet" href="../css/Comment.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html">登入</a>
+                    <a href="singup.html">註冊</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+    </header>
+
+    <div class="review-container">
+        <h2>撰寫評論</h2>
+        <form class="review-form" id="reviewForm">
+            <label for="product">選擇商品:</label>
+            <select id="product">
+                <option value="帥帥吉他">帥帥吉他</option>
+                <option value="帥帥鋼琴">帥帥鋼琴</option>
+                <option value="帥帥小提琴">帥帥小提琴</option>
+                <option value="帥帥木箱鼓">帥帥木箱鼓</option>
+                <option value="帥帥小喇叭">帥帥小喇叭</option>
+                <option value="帥帥拇指琴">帥帥拇指琴</option>
+            </select>
+            <label for="rating">評分:</label>
+            <select id="rating">
+                <option value="1">⭐</option>
+                <option value="2">⭐⭐</option>
+                <option value="3">⭐⭐⭐</option>
+                <option value="4">⭐⭐⭐⭐</option>
+                <option value="5">⭐⭐⭐⭐⭐</option>
+            </select>
+            <label for="comment">留言:</label>
+            <textarea id="comment" placeholder="分享您的心得..."></textarea>
+            <button type="button" onclick="submitReview()">提交評論</button>
+        </form>
+
+        <div class="reviews" id="reviews">
+            <h2>所有評論</h2>
+            <div id="reviewList"></div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <div class="footer-info">
+            客服
+            <a href="mailto:hihi931107@gmail.com" class="gmail">hihi931107@gmail.com</a>
+        </div>
+    </footer>
+
+    <script>
+    const reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+
+    function submitReview() {
+        const product = document.getElementById('product').value;
+        const rating = document.getElementById('rating').value;
+        const comment = document.getElementById('comment').value;
+
+        if (!comment.trim()) {
+            alert('請輸入留言內容！');
+            return;
+        }
+
+        const review = {
+            product,
+            rating,
+            comment,
+            timestamp: new Date().toLocaleString(),
+        };
+
+        reviews.push(review);
+        localStorage.setItem('reviews', JSON.stringify(reviews));
+
+        document.getElementById('reviewForm').reset();
+        displayReviews();
+    }
+
+    function displayReviews() {
+        const reviewList = document.getElementById('reviewList');
+        reviewList.innerHTML = '';
+
+        reviews.forEach(review => {
+            const reviewDiv = document.createElement('div');
+            reviewDiv.className = 'review';
+            reviewDiv.innerHTML = `
+                <p><strong>商品:</strong> ${review.product}</p>
+                <p class="rating"><strong>評分:</strong> ${'⭐'.repeat(review.rating)}</p>
+                <p><strong>留言:</strong> ${review.comment}</p>
+                <p><small>${review.timestamp}</small></p>
+                <button onclick="deleteReview('${review.timestamp}')">刪除</button>
+            `;
+            reviewList.appendChild(reviewDiv);
+        });
+    }
+
+    function deleteReview(timestamp) {
+        const updatedReviews = reviews.filter(review => review.timestamp !== timestamp);
+        localStorage.setItem('reviews', JSON.stringify(updatedReviews));
+        reviews.length = 0;
+        reviews.push(...updatedReviews);
+        displayReviews();
+    }
+
+    displayReviews();
+    </script>
+</body>
+</html>
