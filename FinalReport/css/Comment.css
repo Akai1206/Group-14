@@ -1,3 +1,7 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: 'Courier New', Courier, monospace;
@@ -100,6 +104,7 @@ header {
 .logo img:hover {
     transform: scale(1.1);
 }
+
 .review-container {
     max-width: 800px;
     margin: 20px auto;
