@@ -9,7 +9,7 @@ body {
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; 
     min-height: 100px;
     padding: 1rem 1.5rem;
     background-color: #d4a373;
@@ -20,7 +20,7 @@ header {
 .left-section {
     display: flex;
     align-items: center;
-    gap: 15px; 
+    gap: 15px;
 }
 
 .cart-button img {
@@ -58,7 +58,7 @@ header {
 .dropdown-content {
     display: none;
     position: absolute;
-    left: 0; 
+    left: 0;
     background-color: white;
     min-width: 120px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -79,8 +79,15 @@ header {
     background-color: #f1f1f1;
 }
 
+
 .auth-dropdown:hover .dropdown-content {
     display: block;
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .logo img {
@@ -93,7 +100,6 @@ header {
 .logo img:hover {
     transform: scale(1.1);
 }
-
 .review-container {
     max-width: 800px;
     margin: 20px auto;
