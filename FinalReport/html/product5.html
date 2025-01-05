@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品介紹 - 帥帥小喇叭</title>
+    <link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="login-link">登入</a>
+                    <a href="signup.html" id="signup-link">註冊</a>
+                    <a href="member.html" id="member-link" style="display: none;">會員資料</a>
+                    <a href="#" id="logout-link" style="display: none;">登出</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div> 
+    </header>
+
+    <main>
+        <div class="product-details">
+            <img src="../img/777.png" alt="帥帥小喇叭" class="product-image">
+            <div class="product-info">
+                <p class="product-description">這款小喇叭的音調清晰明亮，適合用來增添氛圍或作為音樂演奏的一部分。無論是用於學校的音樂課程、慶典活動，還是作為舞台表演的道具，它都能提供出色的音效和視覺效果。其便於攜帶的設計，使得無論何時何地都能隨時準備好為您的活動增添樂趣。</p>
+                <p class="product-price">$600</p>
+                <input type="number" class="quantity" id="quantity-speaker" value="1" min="1">
+                <button class="add-to-cart" data-id="small-speaker" data-name="帥帥小喇叭" data-price="600">加入購物車</button>
+            </div>
+        </div>
+
+        <section class="product-reviews">
+            <div class="review-container">
+                <form class="review-form" id="reviewForm">
+                    <h2>商品評論</h2>
+                    <label for="rating">評分:</label>
+                    <select id="rating">
+                        <option value="1">⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                    <label for="comment">留言:</label>
+                    <textarea id="comment" placeholder="分享您的心得..."></textarea>
+                    <button type="button" onclick="submitReview()">提交評論</button>
+                </form>
+        
+                <div class="reviews" id="reviews">
+                    <h2>所有評論</h2>
+                    <div id="reviewList"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+
+    <script>
+        const productId = 'small-speaker';
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+            const memberLink = document.getElementById("member-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (isLoggedIn) {
+                loginLink.style.display = "none";
+                signupLink.style.display = "none";
+                memberLink.style.display = "block";
+                logoutLink.style.display = "block";
+            } else {
+                loginLink.style.display = "block";
+                signupLink.style.display = "block";
+                memberLink.style.display = "none";
+                logoutLink.style.display = "none";
+            }
+
+            logoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("isLoggedIn");
+                alert("已登出！");
+                location.reload();
+            });
+        });
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('view-cart');
+        }
+
+        function addToCart(event) {
+            const button = event.target;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
+            const quantity = parseInt(document.getElementById('quantity-speaker').value);
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ id, name, price, quantity });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            alert('商品已加入購物車');
+        }
+
+        document.querySelector('.add-to-cart').addEventListener('click', addToCart);
+
+        function preventCartImageDisappear() {
+            const cartImage = document.querySelector('#view-cart img');
+            if (cartImage) {
+                cartImage.style.display = 'inline';
+            }
+        }
+
+        window.addEventListener('load', () => {
+            updateCartDisplay();
+            preventCartImageDisappear();
+        });
+
+        function submitReview() {
+            const rating = document.getElementById('rating').value;
+            const comment = document.getElementById('comment').value;
+
+            if (!comment.trim()) {
+                alert('請輸入留言內容！');
+                return;
+            }
+
+            const review = {
+                product: "帥帥小喇叭", 
+                rating,
+                comment,
+                timestamp: new Date().toLocaleString(),
+            };
+
+            let reviews = JSON.parse(localStorage.getItem(`reviews-${productId}`)) || [];
+            reviews.push(review);
+            localStorage.setItem(`reviews-${productId}`, JSON.stringify(reviews));
+
+            document.getElementById('reviewForm').reset();
+            displayReviews();
+        }
+
+        function displayReviews() {
+            const reviews = JSON.parse(localStorage.getItem(`reviews-${productId}`)) || [];
+            const reviewList = document.getElementById('reviewList');
+            reviewList.innerHTML = '';
+
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review';
+                reviewDiv.innerHTML =
+                    `<p><strong>商品:</strong> ${review.product}</p>
+                    <p class="rating"><strong>評分:</strong> ${'⭐'.repeat(review.rating)}</p>
+                    <p><strong>留言:</strong> ${review.comment}</p>
+                    <p><small>${review.timestamp}</small></p>
+                    <button onclick="deleteReview('${review.timestamp}')">刪除</button>`;
+                reviewList.appendChild(reviewDiv);
+            });
+        }
+
+        function deleteReview(timestamp) {
+            let reviews = JSON.parse(localStorage.getItem(`reviews-${productId}`)) || [];
+            const updatedReviews = reviews.filter(review => review.timestamp !== timestamp);
+            localStorage.setItem(`reviews-${productId}`, JSON.stringify(updatedReviews));
+            displayReviews();
+        }
+
+        displayReviews();
+    </script>
+</body>
+</html>

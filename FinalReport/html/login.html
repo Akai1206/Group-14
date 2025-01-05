@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html">登入</a>
+                    <a href="signup.html">註冊</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+    </header>
+    <section>
+        <form class="login" id="login-form">
+            <div class="login-title">登錄</div>
+            <input type="text" id="login-username" placeholder="帳號" required><br><br>
+            <input type="password" id="login-password" placeholder="密碼" required><br><br>
+            <input type="submit" value="登錄">
+            <p>沒有帳號? <a href="signup.html">註冊</a></p>
+        </form>
+    </section>
+    
+    <footer id="footer">
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+
+            const users = JSON.parse(localStorage.getItem("users")) || {};
+
+            if (!users[username]) {
+                alert("帳號不存在！");
+                return;
+            }
+
+            if (users[username].password !== password) {
+                alert("密碼錯誤！");
+                return;
+            }
+
+            alert("登錄成功！");
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("currentUser", username);
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Store</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="login-link">登入</a>
+                    <a href="signup.html" id="signup-link">註冊</a>
+                    <a href="member.html" id="member-link" style="display: none;">會員資料</a>
+                    <a href="#" id="logout-link" style="display: none;">登出</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#article">重點商品</a></li>
+                <li><a href="#section">商品</a></li>
+                <li><a href="about.html">關於我們</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+
+    <article id="article">
+        <h1>熱銷 / 重點商品</h1>
+        <div class="slideshow-container">
+            <div class="mySlides">
+                <a href="product1.html">
+                    <img src="../img/444.png" style="width:100%">
+                </a>
+            </div>
+    
+            <div class="mySlides">
+                <a href="product2.html">
+                    <img src="../img/U3PE.png" style="width:100%">
+                </a>
+            </div>
+    
+            <div class="mySlides">
+                <a href="product4.html">
+                    <img src="../img/666.png" style="width:100%">
+                </a>
+            </div>
+    
+            
+            <div class="pre" onclick="plusSlides(-1)">❮</div>
+            <div class="next" onclick="plusSlides(1)">❯</div>
+        </div>
+    
+        
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </article>
+
+    <section class="products" id="section">
+        <div class="product">
+            <a href="product1.html">
+                <img src="../img/444.png" alt="商品1">
+                <p class="product-description">帥帥吉他</p>
+                <p>$1000</p>
+            </a>
+            <input type="number" class="quantity" id="quantity-1" value="1" min="1">
+            <button class="add-to-cart" data-id="1" data-name="帥帥吉他" data-price="1000">加入購物車</button>
+        </div>
+        <div class="product">
+            <a href="product2.html">
+                <img src="../img/U3PE.png" alt="商品2">
+                <p class="product-description">帥帥鋼琴</p>
+                <p>$2000</p>
+            </a>
+            <input type="number" class="quantity" id="quantity-2" value="1" min="1">
+            <button class="add-to-cart" data-id="2" data-name="帥帥鋼琴" data-price="2000">加入購物車</button>
+        </div>
+        <div class="product">
+            <a href="product3.html">
+                <img src="../img/555.png" alt="商品3">
+                <p class="product-description">帥帥小提琴</p>
+                <p>$1500</p>
+            </a>
+            <input type="number" class="quantity" id="quantity-3" value="1" min="1">
+            <button class="add-to-cart" data-id="3" data-name="帥帥小提琴" data-price="1500">加入購物車</button>
+        </div>
+        <div class="product">
+            <a href="product4.html">
+                <img src="../img/666.png" alt="商品4">
+                <p class="product-description">帥帥木箱鼓</p>
+                <p>$800</p>
+            </a>
+            <input type="number" class="quantity" id="quantity-4" value="1" min="1">
+            <button class="add-to-cart" data-id="4" data-name="帥帥木箱鼓" data-price="800">加入購物車</button>
+        </div>
+        <div class="product">
+            <a href="product5.html">
+                <img src="../img/777.png" alt="商品5">
+                <p class="product-description">帥帥小喇叭</p>
+                <p>$600</p>
+            </a>
+            <input type="number" class="quantity" id="quantity-5" value="1" min="1">
+            <button class="add-to-cart" data-id="5" data-name="帥帥小喇叭" data-price="600">加入購物車</button>
+        </div>
+        <div class="product">
+            <a href="product6.html">
+                <img src="../img/888.png" alt="商品6">
+                <p class="product-description">帥帥拇指琴</p>
+                <p>$500</p>
+            </a>
+            <input type="number" class="quantity" id="quantity-6" value="1" min="1">
+            <button class="add-to-cart" data-id="6" data-name="帥帥拇指琴" data-price="500">加入購物車</button>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+            const memberLink = document.getElementById("member-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (isLoggedIn) {
+                loginLink.style.display = "none";
+                signupLink.style.display = "none";
+                memberLink.style.display = "block";
+                logoutLink.style.display = "block";
+            } else {
+                loginLink.style.display = "block";
+                signupLink.style.display = "block";
+                memberLink.style.display = "none";
+                logoutLink.style.display = "none";
+            }
+
+            logoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("isLoggedIn");
+                alert("已登出！");
+                location.reload();
+            });
+        });
+
+    </script>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('view-cart');
+            cartCount.textContent = `查看購物車 (${cart.length})`;
+        }
+
+        function addToCart(event) {
+            const button = event.target;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
+            const quantity = parseInt(document.getElementById('quantity-' + id).value);
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ id, name, price, quantity });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', addToCart);
+        });
+    </script>
+
+    <script>
+        var slideIndex = 0;
+        var slideInterval;
+
+        function showSlides(n) {
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+  
+            if (n >= slides.length) { slideIndex = 0; }
+            if (n < 0) { slideIndex = slides.length - 1; }
+
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (var i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex].style.display = "block";
+
+            dots[slideIndex].className += " active";
+        }
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n - 1);
+        }
+
+        showSlides(slideIndex);
+
+        function startAutoPlay() {
+            slideInterval = setInterval(function() {
+                plusSlides(1); 
+            }, 2000);
+        }
+
+        startAutoPlay();
+
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員資料</title>
+    <link rel="stylesheet" href="../css/meber.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="login-link">登入</a>
+                    <a href="signup.html" id="signup-link">註冊</a>
+                    <a href="member.html" id="member-link" style="display: none;">會員資料</a>
+                    <a href="#" id="logout-link" style="display: none;">登出</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <form class="meber" id="member-form">
+            <div class="meber-title">會員資料</div>
+            <label for="display-name">用戶名：</label>
+            <input type="text" id="display-name"><br><br>
+            <label for="username">帳號：</label>
+            <input type="text" id="username"><br><br>
+            <label for="password">密碼：</label>
+            <input type="password" id="password"><br><br>
+            <button type="button" id="save-button">保存修改</button>
+        </form>
+        <div class="orders">
+            <div class="orders-title">歷史訂單</div>
+            <div id="orders-container">
+                
+            </div>
+        </div>
+    </section>
+    <footer id="footer">
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+            const memberLink = document.getElementById("member-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (isLoggedIn) {
+                loginLink.style.display = "none";
+                signupLink.style.display = "none";
+                memberLink.style.display = "block";
+                logoutLink.style.display = "block";
+            } else {
+                loginLink.style.display = "block";
+                signupLink.style.display = "block";
+                memberLink.style.display = "none";
+                logoutLink.style.display = "none";
+            }
+
+            logoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("isLoggedIn");
+                alert("已登出！");
+                location.reload();
+            });
+        });
+
+    </script>
+
+    <script> 
+        document.addEventListener("DOMContentLoaded", () => {
+            const currentUser = localStorage.getItem("currentUser");
+            const users = JSON.parse(localStorage.getItem("users")) || {};
+
+            if (!currentUser || !users[currentUser]) {
+                alert("未登入，請先登入！");
+                window.location.href = "login.html"; 
+                return;
+            }
+
+            const userInfo = users[currentUser];
+            const ordersContainer = document.getElementById("orders-container");
+
+            document.getElementById("display-name").value = userInfo.displayName;
+            document.getElementById("username").value = userInfo.username;
+            document.getElementById("password").value = userInfo.password;
+
+            if (userInfo.orders && userInfo.orders.length > 0) {
+                userInfo.orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                userInfo.orders.forEach(order => {
+                    const orderElement = document.createElement('div');
+                    orderElement.classList.add('order-item');
+                    orderElement.innerHTML = `
+                        <h4>訂單日期: ${new Date(order.date).toLocaleString()}</h4>
+                        <p>支付方式: ${order.paymentMethod}</p>
+                        <p>總金額: NT$ ${order.totalAmount}</p>
+                        <h5>訂單內容：</h5>
+                        <ul>
+                            ${order.items.map(item => `
+                                <li>${item.name} - 數量: ${item.quantity} - NT$ ${item.price * item.quantity}</li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    ordersContainer.appendChild(orderElement);
+                });
+            } else {
+                ordersContainer.innerHTML = "<p>尚未有歷史訂單。</p>";
+            }
+            
+            document.getElementById("save-button").addEventListener("click", () => {
+                const updatedDisplayName = document.getElementById("display-name").value;
+                const updatedUsername = document.getElementById("username").value;
+                const updatedPassword = document.getElementById("password").value;
+
+                if (updatedUsername !== currentUser && users[updatedUsername]) {
+                    alert("帳號已存在，請使用其他帳號！");
+                    return;
+                }
+
+                delete users[currentUser];
+                users[updatedUsername] = {
+                    displayName: updatedDisplayName,
+                    username: updatedUsername,
+                    password: updatedPassword,
+                    orders: userInfo.orders,
+                };
+                localStorage.setItem("users", JSON.stringify(users));
+                localStorage.setItem("currentUser", updatedUsername);
+
+                alert("會員資料更新成功！");
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品介紹 - 帥帥吉他</title>
+    <link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="login-link">登入</a>
+                    <a href="signup.html" id="signup-link">註冊</a>
+                    <a href="member.html" id="member-link" style="display: none;">會員資料</a>
+                    <a href="#" id="logout-link" style="display: none;">登出</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+    </header>
+    <main>
+        <div class="product-details">
+            <img src="../img/444.png" alt="帥帥吉他" class="product-image">
+            <div class="product-info">
+                <p class="product-description">這是一款專為音樂愛好者設計的吉他，無論你是初學者還是有經驗的吉他手，都能夠輕鬆上手並發揮出色的音樂表現。吉他的琴身採用高品質木材製成，提供明亮、清晰的音色，無論是在練習或表演中，都能帶來豐富的音樂層次感。經過精心調整的琴弦，讓每個音符都更加準確且響亮。</p>
+                <p class="product-price">$1000</p>
+                <input type="number" class="quantity" id="quantity-guitar" value="1" min="1">
+                <button class="add-to-cart" data-id="guitar" data-name="帥帥吉他" data-price="1000">加入購物車</button>
+            </div>
+        </div>
+        <section class="product-reviews">
+            <div class="review-container">
+                <h2>商品評論</h2>
+                <form class="review-form" id="reviewForm">
+                    <label for="rating">評分:</label>
+                    <select id="rating">
+                        <option value="1">⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                    <label for="comment">留言:</label>
+                    <textarea id="comment" placeholder="分享您的心得..."></textarea>
+                    <button type="button" onclick="submitReview()">提交評論</button>
+                </form>
+
+                <div class="reviews" id="reviews">
+                    <h2>所有評論</h2>
+                    <div id="reviewList"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+            const memberLink = document.getElementById("member-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (isLoggedIn) {
+                loginLink.style.display = "none";
+                signupLink.style.display = "none";
+                memberLink.style.display = "block";
+                logoutLink.style.display = "block";
+            } else {
+                loginLink.style.display = "block";
+                signupLink.style.display = "block";
+                memberLink.style.display = "none";
+                logoutLink.style.display = "none";
+            }
+
+            logoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("isLoggedIn");
+                alert("已登出！");
+                location.reload();
+            });
+        });
+    </script>
+
+    <script>
+        const productId = 'guitar';
+        let reviews = JSON.parse(localStorage.getItem(`reviews-${productId}`)) || [];
+
+        function submitReview() {
+            const rating = document.getElementById('rating').value;
+            const comment = document.getElementById('comment').value;
+
+            if (!comment.trim()) {
+                alert('請輸入留言內容！');
+                return;
+            }
+
+            const review = {
+                rating,
+                comment,
+                timestamp: new Date().toLocaleString(),
+            };
+
+            reviews.push(review);
+            localStorage.setItem(`reviews-${productId}`, JSON.stringify(reviews));
+
+            document.getElementById('reviewForm').reset();
+            displayReviews();
+        }
+
+        function displayReviews() {
+            const reviewList = document.getElementById('reviewList');
+            reviewList.innerHTML = '';
+
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review';
+                reviewDiv.innerHTML =
+                    `<p class="rating"><strong>評分:</strong> ${'⭐'.repeat(review.rating)}</p>
+                    <p><strong>留言:</strong> ${review.comment}</p>
+                    <p><small>${review.timestamp}</small></p>`;
+                reviewList.appendChild(reviewDiv);
+            });
+        }
+
+        displayReviews();
+    </script>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('view-cart');
+            if (cartCount) {
+                cartCount.innerHTML = '';
+                const cartImage = document.createElement('img');
+                cartImage.src = '../img/333.png';
+                cartImage.alt = 'Cart';
+                cartCount.appendChild(cartImage);
+            }
+        }
+
+        function addToCart(event) {
+            const button = event.target;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
+            const quantity = parseInt(document.getElementById('quantity-' + id).value);
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ id, name, price, quantity });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            alert('商品已加入購物車');
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', addToCart);
+        });
+
+        function preventCartImageDisappear() {
+            const cartImage = document.querySelector('#view-cart img');
+            if (cartImage) {
+                cartImage.style.display = 'inline';
+            }
+        }
+
+        window.addEventListener('load', () => {
+            updateCartDisplay();
+            preventCartImageDisappear();
+        });
+    </script>
+</body>
+</html>

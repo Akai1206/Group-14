@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購物車</title>
+    <link rel="stylesheet" href="../css/cart.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="login-link">登入</a>
+                    <a href="signup.html" id="signup-link">註冊</a>
+                    <a href="member.html" id="member-link" style="display: none;">會員資料</a>
+                    <a href="#" id="logout-link" style="display: none;">登出</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div>
+    </header>
+
+    <section>
+        <div class="cart-container">
+            <div class="cart-header">
+                <h2>購物車</h2>
+                <a href="index.html" class="continue-shopping">繼續購物</a>
+            </div>
+            <div class="cart-items"></div>
+            <div class="cart-summary">
+                <h3>總金額：<span id="total-price">0</span></h3>
+                <button id="clear-cart-btn" class="clear-cart-btn">清空購物車</button>
+                <a href="checkout.html" class="checkout-btn">前往結帳</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer">
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+            const memberLink = document.getElementById("member-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (isLoggedIn) {
+                loginLink.style.display = "none";
+                signupLink.style.display = "none";
+                memberLink.style.display = "block";
+                logoutLink.style.display = "block";
+            } else {
+                loginLink.style.display = "block";
+                signupLink.style.display = "block";
+                memberLink.style.display = "none";
+                logoutLink.style.display = "none";
+            }
+
+            logoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("isLoggedIn");
+                alert("已登出！");
+                location.reload();
+            });
+        });
+
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cartItemsContainer = document.querySelector('.cart-items');
+            const totalPriceElement = document.getElementById('total-price');
+            const clearCartButton = document.getElementById('clear-cart-btn');
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            function updateCart() {
+                cartItemsContainer.innerHTML = '';
+                let totalPrice = 0;
+
+                cart.forEach(item => {
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.classList.add('cart-item');
+                    cartItemElement.innerHTML = `
+                        <div class="item-info">
+                            <p>${item.name}</p>
+                            <p>單價: NT$ ${item.price}</p>
+                        </div>
+                        <div class="item-quantity">
+                            <label for="quantity-${item.id}">數量：</label>
+                            <input id="quantity-${item.id}" type="number" value="${item.quantity}" min="1" data-id="${item.id}">
+                        </div>
+                        <div class="item-price" id="price-${item.id}">NT$ ${item.price * item.quantity}</div>
+                    `;
+                    cartItemsContainer.appendChild(cartItemElement);
+                    totalPrice += item.price * item.quantity;
+                });
+
+                totalPriceElement.textContent = `NT$ ${totalPrice.toLocaleString()}`;
+                document.querySelectorAll('.item-quantity input').forEach(input => {
+                    input.addEventListener('input', updateQuantity);
+                });
+            }
+
+            function updateQuantity(event) {
+                const input = event.target;
+                const id = input.getAttribute('data-id');
+                const newQuantity = parseInt(input.value);
+
+                const item = cart.find(item => item.id === id);
+                if (item) {
+                    item.quantity = newQuantity > 0 ? newQuantity : 1;
+                    document.getElementById(`price-${id}`).textContent = `NT$ ${item.price * item.quantity}`;
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCart();
+            }
+
+            clearCartButton.addEventListener('click', () => {
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCart();
+                alert('購物車已清空！');
+            });
+
+            updateCart();
+        });
+    </script>
+</body>
+</html>

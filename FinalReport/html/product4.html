@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品介紹 - 帥帥木箱鼓</title>
+    <link rel="stylesheet" href="../css/product.css">
+</head>
+<body>
+    <header>
+        <div class="left-section">
+            <div class="cart-button">
+                <a href="cart.html" id="view-cart">
+                    <img src="../img/333.png" alt="Cart">
+                </a>
+            </div>
+            <div class="auth-dropdown">
+                <button class="dropdown-button">會員中心</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="login-link">登入</a>
+                    <a href="signup.html" id="signup-link">註冊</a>
+                    <a href="member.html" id="member-link" style="display: none;">會員資料</a>
+                    <a href="#" id="logout-link" style="display: none;">登出</a>
+                </div>
+            </div>
+        </div>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../img/111.png" alt="Logo">
+            </a>
+        </div> 
+    </header>
+    <main>
+        <div class="product-details">
+            <img src="../img/666.png" alt="帥帥木箱鼓" class="product-image">
+            <div class="product-info">
+                <p class="product-description">這款木箱鼓（Cajón）是一種源自非洲和拉丁美洲的打擊樂器，以其獨特的音色和多樣的演奏方式，成為音樂愛好者和專業音樂家喜愛的選擇。木箱鼓的外殼選用高品質木材製作，經過精心設計與製作，提供強而有力的低音與清晰的高音，能夠應對各種音樂風格，從民謠到拉丁音樂，都能完美融合。</p>
+                <p class="product-price">$800</p>
+                <button class="add-to-cart" data-id="pangolin" data-name="帥帥木箱鼓" data-price="800">加入購物車</button>
+            </div>
+        </div>
+
+        <section class="product-reviews">
+            <div class="review-container">
+                <form class="review-form" id="reviewForm">
+                    <h2>商品評論</h2>
+                    <label for="rating">評分:</label>
+                    <select id="rating">
+                        <option value="1">⭐</option>
+                        <option value="2">⭐⭐</option>
+                        <option value="3">⭐⭐⭐</option>
+                        <option value="4">⭐⭐⭐⭐</option>
+                        <option value="5">⭐⭐⭐⭐⭐</option>
+                    </select>
+                    <label for="comment">留言:</label>
+                    <textarea id="comment" placeholder="分享您的心得..."></textarea>
+                    <button type="button" onclick="submitReview()">提交評論</button>
+                </form>
+
+                <div class="reviews" id="reviews">
+                    <h2>所有評論</h2>
+                    <div id="reviewList"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 商品網站</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+            const memberLink = document.getElementById("member-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (isLoggedIn) {
+                loginLink.style.display = "none";
+                signupLink.style.display = "none";
+                memberLink.style.display = "block";
+                logoutLink.style.display = "block";
+            } else {
+                loginLink.style.display = "block";
+                signupLink.style.display = "block";
+                memberLink.style.display = "none";
+                logoutLink.style.display = "none";
+            }
+
+            logoutLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                localStorage.removeItem("isLoggedIn");
+                alert("已登出！");
+                location.reload();
+            });
+        });
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function addToCart(event) {
+            const button = event.target;
+            const id = button.getAttribute('data-id');
+            const name = button.getAttribute('data-name');
+            const price = parseFloat(button.getAttribute('data-price'));
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, quantity: 1 });
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert('商品已加入購物車');
+        }
+
+        document.querySelector('.add-to-cart').addEventListener('click', addToCart);
+
+        const productName = "帥帥木箱鼓";
+        let reviews = JSON.parse(localStorage.getItem(`reviews-${productName}`)) || [];
+
+        function submitReview() {
+            const rating = document.getElementById('rating').value;
+            const comment = document.getElementById('comment').value;
+
+            if (!comment.trim()) {
+                alert('請輸入留言內容！');
+                return;
+            }
+
+            const review = {
+                product: productName,
+                rating,
+                comment,
+                timestamp: new Date().toLocaleString(),
+            };
+
+            reviews.push(review);
+            localStorage.setItem(`reviews-${productName}`, JSON.stringify(reviews));
+
+            document.getElementById('reviewForm').reset();
+            displayReviews();
+        }
+
+        function displayReviews() {
+            const reviewList = document.getElementById('reviewList');
+            reviewList.innerHTML = '';
+
+            reviews.forEach(review => {
+                const reviewDiv = document.createElement('div');
+                reviewDiv.className = 'review';
+                reviewDiv.innerHTML = `
+                    <p><strong>商品:</strong> ${review.product}</p>
+                    <p class="rating"><strong>評分:</strong> ${'⭐'.repeat(review.rating)}</p>
+                    <p><strong>留言:</strong> ${review.comment}</p>
+                    <p><small>${review.timestamp}</small></p>
+                    <button onclick="deleteReview('${review.timestamp}')">刪除</button>
+                `;
+                reviewList.appendChild(reviewDiv);
+            });
+        }
+
+        function deleteReview(timestamp) {
+            const updatedReviews = reviews.filter(review => review.timestamp !== timestamp);
+            localStorage.setItem(`reviews-${productName}`, JSON.stringify(updatedReviews));
+            reviews.length = 0;
+            reviews.push(...updatedReviews);
+            displayReviews();
+        }
+
+        displayReviews();
+    </script>
+</body>
+</html>
